@@ -1,9 +1,15 @@
 import "./App.css";
-import Stocks from "./components/Stocks";
+import { useState, useEffect } from "react";
+import StocksTable from "./components/StocksTable";
+import Navbar from "./components/Navbar";
+
 function App() {
+  const [stocks, setStocks] = useState([]);
+
   return (
     <div className="App">
-      <Stocks />
+      <Navbar />
+      <StocksTable />
     </div>
   );
 }
