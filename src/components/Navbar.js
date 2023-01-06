@@ -5,6 +5,9 @@ import { Container } from "@chakra-ui/react";
 import { Flex, Spacer } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/react";
 import ToggleButton from "./ToggleButton";
+import StocksTable from "./StocksTable";
+import Quotes from "./Quotes";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <Flex>
@@ -13,8 +16,12 @@ const Navbar = () => {
           <Tabs variant="soft-rounded" colorScheme="green">
             <Center>
               <TabList>
-                <Tab>Stocks</Tab>
-                <Tab>Quotes</Tab>
+                <Tab>
+                  <Link to="/stocks">Stocks</Link>
+                </Tab>
+                <Tab>
+                  <Link to="/quotes">Quotes</Link>
+                </Tab>
               </TabList>
             </Center>
           </Tabs>

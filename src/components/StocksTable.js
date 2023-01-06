@@ -1,7 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Container, Center, Flex } from "@chakra-ui/react";
+import {
+  Container,
+  Center,
+  Flex,
+  Input,
+  Button,
+  ButtonGroup,
+} from "@chakra-ui/react";
+import Fuse from "fuse.js";
 import { Box } from "@chakra-ui/react";
+import Quotes from "./Quotes";
+
 import {
   Table,
   Thead,
@@ -13,8 +23,17 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 const StocksTable = () => {
   const [stocks, setStocks] = useState("");
+  const [newStocks, setNewStocks] = useState([]);
+  const [tar, setTar] = useState(0);
+
+  // const xyz = (e) => {
+  //   <Quotes text={e.target.innerText} />;
+  //   console.log(e.target.innerText);
+  // };
+
   function csvJSON(result) {
     var lines = result.split("\n");
 
@@ -48,8 +67,28 @@ const StocksTable = () => {
     getData();
   }, []);
 
+  const fuse = new Fuse(stocks, {
+    keys: ["Symbol", "Name"],
+  });
+  const getValue = (e) => {
+    const val = e.target.value;
+    setTar(val);
+    console.log(!tar);
+    const results = fuse.search(val);
+    setNewStocks(results);
+    console.log(results);
+  };
+
   return (
     <Box mt={10}>
+      <Container>
+        <Input
+          variant="filled"
+          placeholder="Search Stocks ..."
+          size="sm"
+          onChange={getValue}
+        />
+      </Container>
       <Center>
         <TableContainer display="block" whiteSpace="nowrap">
           <Table size="lg" variant="striped" colorScheme="teal">
@@ -62,11 +101,24 @@ const StocksTable = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {stocks.map((stock) => (
+              {/* { if(tar===0){
+              stocks.map((stock)=>(
                 <Tr>
                   <Td>{stock.Symbol}</Td>
                   <Td>{stock.Name}</Td>
                   <Td>{stock.Sector}</Td>
+                </Tr>
+              ))
+            }} */}
+              {newStocks.map((stock) => (
+                <Tr>
+                  <Td>
+                    <Button colorScheme="teal" variant="ghost">
+                      {stock.item.Symbol}
+                    </Button>
+                  </Td>
+                  <Td>{stock.item.Name}</Td>
+                  <Td>{stock.item.Sector}</Td>
                 </Tr>
               ))}
             </Tbody>
@@ -76,5 +128,4 @@ const StocksTable = () => {
     </Box>
   );
 };
-
 export default StocksTable;
