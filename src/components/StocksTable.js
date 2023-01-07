@@ -7,27 +7,26 @@ import {
   Input,
   Button,
   ButtonGroup,
-} from "@chakra-ui/react";
-import Fuse from "fuse.js";
-import { Box } from "@chakra-ui/react";
-import Quotes from "./Quotes";
-
-import {
+  Tabs,
+  TabList,
+  Tab,
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   TableCaption,
   TableContainer,
+  Box,
 } from "@chakra-ui/react";
+import Fuse from "fuse.js";
 import { Link } from "react-router-dom";
 const StocksTable = (props) => {
   const [stocks, setStocks] = useState("");
-  const [tar, setTar] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     if (props.activeTab === "stocks") {
@@ -92,17 +91,42 @@ const StocksTable = (props) => {
     setSearchTerm(event.target.value);
   };
   const filteredStocks = filterStocks(stocks, searchTerm);
+  // const objects = filteredStocks.flatMap((item) =>
+  //   item.map((obj) => ({
+  //     Symbol: obj.item.Symbol,
+  //     Name: obj.item.Name,
+  //     Sector: obj.item.Sector,
+  //   }))
+  // );
+  // console.log(objects);
 
   return (
     <Box mt={10}>
       <Container>
-        <Input
-          variant="filled"
-          placeholder="Search Stocks ..."
-          size="sm"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+        <Tabs variant="soft-rounded" colorScheme="green">
+          <Center>
+            <TabList>
+              <Tab>
+                <Link to="/stocks">Stocks</Link>
+              </Tab>
+              <Tab>
+                <Link to="/quotes">Quotes</Link>
+              </Tab>
+            </TabList>
+          </Center>
+        </Tabs>
+      </Container>
+
+      <Container>
+        <Box pt={10}>
+          <Input
+            variant="filled"
+            placeholder="Search Stocks ..."
+            size="sm"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </Box>
       </Container>
       <Center>
         <TableContainer display="block" whiteSpace="nowrap">
@@ -116,7 +140,7 @@ const StocksTable = (props) => {
               </Tr>
             </Thead>
             <Tbody>
-              {/* { if(tar===0){
+              {/* {/* 
               stocks.map((stock)=>(
                 <Tr>
                   <Td>{stock.Symbol}</Td>
@@ -124,7 +148,7 @@ const StocksTable = (props) => {
                   <Td>{stock.Sector}</Td>
                 </Tr>
               ))
-            }} */}
+            } */}
               {filteredStocks.map((stock) => (
                 <Tr>
                   <Td>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Table,
   Thead,
@@ -9,10 +10,14 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Container,
+  Tab,
+  Tabs,
+  Center,
+  TabList,
+  Button,
+  Box,
 } from "@chakra-ui/react";
-import { Button, ButtonGroup } from "@chakra-ui/react";
-import { Box } from "@chakra-ui/react";
-
 const Quotes = () => {
   const [symbol, setSymbol] = useState("");
   const [quotes, setQuotes] = useState([]);
@@ -57,6 +62,20 @@ const Quotes = () => {
 
   return (
     <Box mt={10}>
+      <Container>
+        <Tabs variant="soft-rounded" colorScheme="green">
+          <Center>
+            <TabList>
+              <Tab>
+                <Link to="/quotes">Quotes</Link>
+              </Tab>
+              <Tab>
+                <Link to="/stocks">Stocks</Link>
+              </Tab>
+            </TabList>
+          </Center>
+        </Tabs>
+      </Container>
       <TableContainer display="block" whiteSpace="nowrap">
         <Table size="lg" variant="striped" colorScheme="teal">
           <TableCaption>Quote of the respective company</TableCaption>
