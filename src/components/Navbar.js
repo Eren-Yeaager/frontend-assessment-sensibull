@@ -7,9 +7,10 @@ import { Divider } from "@chakra-ui/react";
 import ToggleButton from "./ToggleButton";
 import StocksTable from "./StocksTable";
 import Quotes from "./Quotes";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 const Navbar = () => {
-  return (
+   return (
     <Flex>
       <Box mt={10}>
         <Container>

@@ -24,15 +24,18 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-const StocksTable = () => {
+const StocksTable = (props) => {
   const [stocks, setStocks] = useState("");
-  const [newStocks, setNewStocks] = useState([]);
   const [tar, setTar] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // const xyz = (e) => {
-  //   <Quotes text={e.target.innerText} />;
-  //   console.log(e.target.innerText);
-  // };
+  useEffect(() => {
+    if (props.activeTab === "stocks") {
+      window.history.pushState({}, "", "/stocks");
+    } else if (props.activeTab === "quotes") {
+      window.history.pushState({}, "", "/quotes");
+    }
+  }, [props.activeTab]);
 
   function csvJSON(result) {
     var lines = result.split("\n");
@@ -67,17 +70,28 @@ const StocksTable = () => {
     getData();
   }, []);
 
-  const fuse = new Fuse(stocks, {
-    keys: ["Symbol", "Name"],
-  });
-  const getValue = (e) => {
-    const val = e.target.value;
-    setTar(val);
-    console.log(!tar);
-    const results = fuse.search(val);
-    setNewStocks(results);
-    console.log(results);
+  window.abc = "";
+  const xyz = (e) => {
+    window.abc = e.target.innerText;
   };
+
+  const filterStocks = (stocks, searchTerm) => {
+    const options = {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: ["Symbol", "Name"],
+    };
+    const fuse = new Fuse(stocks, options);
+    return fuse.search(searchTerm);
+  };
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const filteredStocks = filterStocks(stocks, searchTerm);
 
   return (
     <Box mt={10}>
@@ -86,7 +100,8 @@ const StocksTable = () => {
           variant="filled"
           placeholder="Search Stocks ..."
           size="sm"
-          onChange={getValue}
+          value={searchTerm}
+          onChange={handleSearch}
         />
       </Container>
       <Center>
@@ -110,12 +125,14 @@ const StocksTable = () => {
                 </Tr>
               ))
             }} */}
-              {newStocks.map((stock) => (
+              {filteredStocks.map((stock) => (
                 <Tr>
                   <Td>
-                    <Button colorScheme="teal" variant="ghost">
-                      {stock.item.Symbol}
-                    </Button>
+                    <Link to="/quotes">
+                      <Button onClick={xyz} colorScheme="teal" variant="ghost">
+                        {stock.item.Symbol}
+                      </Button>
+                    </Link>
                   </Td>
                   <Td>{stock.item.Name}</Td>
                   <Td>{stock.item.Sector}</Td>
