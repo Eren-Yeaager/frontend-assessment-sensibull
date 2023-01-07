@@ -31,8 +31,8 @@ const Quotes = () => {
 
     setQuotes(result.payload);
 
-    console.log(result);
-    console.log(typeof quotes);
+    // console.log(result);
+    // console.log(typeof quotes);
   }
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const Quotes = () => {
                 <Link to="/quotes">Quotes</Link>
               </Tab>
               <Tab>
-                <Link to="/stocks">Stocks</Link>
+                <Link to="/">Stocks</Link>
               </Tab>
             </TabList>
           </Center>

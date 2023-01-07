@@ -29,8 +29,8 @@ const StocksTable = (props) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    if (props.activeTab === "stocks") {
-      window.history.pushState({}, "", "/stocks");
+    if (props.activeTab === "/") {
+      window.history.pushState({}, "", "/");
     } else if (props.activeTab === "quotes") {
       window.history.pushState({}, "", "/quotes");
     }
@@ -107,7 +107,7 @@ const StocksTable = (props) => {
           <Center>
             <TabList>
               <Tab>
-                <Link to="/stocks">Stocks</Link>
+                <Link to="/">Stocks</Link>
               </Tab>
               <Tab>
                 <Link to="/quotes">Quotes</Link>
