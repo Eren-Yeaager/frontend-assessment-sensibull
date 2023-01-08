@@ -91,14 +91,6 @@ const StocksTable = (props) => {
     setSearchTerm(event.target.value);
   };
   const filteredStocks = filterStocks(stocks, searchTerm);
-  // const objects = filteredStocks.flatMap((item) =>
-  //   item.map((obj) => ({
-  //     Symbol: obj.item.Symbol,
-  //     Name: obj.item.Name,
-  //     Sector: obj.item.Sector,
-  //   }))
-  // );
-  // console.log(objects);
 
   return (
     <Box mt={10}>
